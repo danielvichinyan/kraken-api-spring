@@ -47,7 +47,6 @@ public class KrakenHandler extends TextWebSocketHandler {
     public void sendAndConfirm(String msg, int reqId) {
         String errorMsg = null;
         try {
-            System.out.println(new TextMessage(msg).getPayload());
             this.clientSession.sendMessage(new TextMessage(msg));
             int i = 1;
             do {
@@ -72,7 +71,7 @@ public class KrakenHandler extends TextWebSocketHandler {
 
         try {
             Object jsonResponseObject = jsonMapper.readValue(message.getPayload(), Object.class);
-            System.out.println(jsonResponseObject);
+
             if (jsonResponseObject instanceof Map) {
                 String event = (String) ((Map) jsonResponseObject).get("event");
 
@@ -85,7 +84,6 @@ public class KrakenHandler extends TextWebSocketHandler {
                         }
                         else {
                             SubscriptionDTO subscriptionDTO = jsonMapper.convertValue(jsonResponseObject, SubscriptionDTO.class);
-                            System.out.println(subscriptionDTO);
                         }
                         break;
                     default:

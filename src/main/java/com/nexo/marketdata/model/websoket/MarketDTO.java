@@ -10,25 +10,25 @@ import java.time.Instant;
 @JsonPropertyOrder({"price", "volume", "timestamp" , "r"})
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MarketDTO {
-    public String price;
-    public String volume;
+    public Double price;
+    public Double volume;
     public String timestamp;
     public String r;
 
     private MarketDTO() {}
 
-    public MarketDTO(String price, String volume, String timestamp, String r) {
+    public MarketDTO(Double price, Double volume, String timestamp, String r) {
         this.price = price;
         this.volume = volume;
         this.timestamp = timestamp;
         this.r = r;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public String getVolume() {
+    public Double getVolume() {
         return volume;
     }
 
