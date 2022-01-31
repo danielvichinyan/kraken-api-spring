@@ -36,14 +36,6 @@ public class KrakenHandler extends TextWebSocketHandler {
         this.errorMessages = new ConcurrentHashMap<>(500);
     }
 
-    public void sendMessage(String msg) {
-        try {
-            this.clientSession.sendMessage(new TextMessage(msg));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void sendAndConfirm(String msg, int reqId) {
         String errorMsg = null;
         try {
