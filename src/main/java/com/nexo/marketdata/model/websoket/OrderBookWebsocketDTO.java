@@ -53,6 +53,7 @@ public class OrderBookWebsocketDTO {
 
             for (MarketDTO market : reversedAsks) {
                 stringBuilder.append(market).append(",\n");
+                timeStamp = market.convertTime();
             }
 
             stringBuilder.append("best ask: [ ")
