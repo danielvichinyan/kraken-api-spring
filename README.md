@@ -14,7 +14,8 @@ For the this endpoint you have to provide query param "pair", for example: ?pair
 1). Get Order Book Data Endpoint (GET) -> http://localhost:8080/data?pair=BTCUSD
 
 ***WebSockets API*:**
-***Before starting - you can swap the abbreviation BTC with XBT. "XBT" is a new abbreviation for Bitcoin that is starting to come into use and reflects its growing legitimacy as an international currency.
+
+***Before starting - you can swap the abbreviation BTC with XBT. "XBT" is a new abbreviation for Bitcoin that is starting to come into use and reflects its growing legitimacy as an international currency.***
 
 ***WARNING***
 
