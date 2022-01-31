@@ -16,10 +16,23 @@ public class WebSocketServiceImpl extends TextWebSocketHandler implements WebSoc
 
     private final KrakenHandler publicClient;
 
+    /**
+     * Constructor
+     */
     public WebSocketServiceImpl() {
         this.publicClient = new KrakenHandler();
     }
 
+    /**
+     * Builds a json object from the four request params given by the user
+     * It is then sent as a string to the server.
+     * It is sent through a client session message.
+     *
+     * @param pairs
+     * @param interval
+     * @param depth
+     * @param name
+     */
     @Override
     public void subscribe(List<String> pairs, int interval, int depth, String name) {
         var json = new ObjectMapper().createObjectNode();
@@ -38,12 +51,23 @@ public class WebSocketServiceImpl extends TextWebSocketHandler implements WebSoc
         this.publicClient.sendAndConfirm(json.toString(), reqId);
     }
 
+    /**
+     * Validates if the client is connected.
+     *
+     * If not, then connect.
+     */
     @Override
     public boolean connect() {
-        val publicCon = this.publicClient.connected() ? this.publicClient.connected() : this.publicClient.connect();
+        val publicCon = this.publicClient.connected()
+                ? this.publicClient.connected()
+                : this.publicClient.connect();
+
         return publicCon;
     }
 
+    /**
+     * Closes the connection.
+     */
     @Override
     public void close() {
         this.publicClient.close();

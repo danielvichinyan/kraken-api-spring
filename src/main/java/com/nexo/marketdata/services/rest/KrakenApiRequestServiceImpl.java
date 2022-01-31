@@ -41,7 +41,6 @@ public class KrakenApiRequestServiceImpl implements KrakenApiRequestService {
         try {
             connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod(RequestConstants.REQUEST_POST);
-            connection.addRequestProperty(RequestConstants.REQUEST_USER_AGENT, RequestConstants.REQUEST_USER_AGENT_NAME);
 
             // Set public key & signature if method is private
             if (!isPublic) {
@@ -101,7 +100,10 @@ public class KrakenApiRequestServiceImpl implements KrakenApiRequestService {
 
         this.postData = new StringBuilder();
         for (Entry<String, String> entry : parameters.entrySet()) {
-            this.postData.append(entry.getKey()).append(EQUAL_SIGN).append(KrakenUtilsService.urlEncode(entry.getValue())).append(AMPERSAND);
+            this.postData.append(entry.getKey())
+                    .append(EQUAL_SIGN)
+                    .append(KrakenUtilsService.urlEncode(entry.getValue()))
+                    .append(AMPERSAND);
         }
 
         return this.postData.toString();

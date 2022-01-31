@@ -32,10 +32,19 @@ public class KrakenHandler extends TextWebSocketHandler {
     private WebSocketSession clientSession;
     private final ConcurrentHashMap<Integer, String> errorMessages;
 
+    /**
+     * Constructor
+     */
     public KrakenHandler() {
         this.errorMessages = new ConcurrentHashMap<>(500);
     }
 
+    /**
+     * Sends a message to the server via the client session.
+     *
+     * @param msg
+     * @param reqId
+     */
     public void sendAndConfirm(String msg, int reqId) {
         String errorMsg = null;
         try {
@@ -58,23 +67,37 @@ public class KrakenHandler extends TextWebSocketHandler {
         }
     }
 
+    /**
+     * Handles every message(response) from the API.
+     * The logic is applied to each generated message(response) from the websocket stream.
+     *
+     * @param session
+     * @param message
+     */
     @Override
     public void handleTextMessage(@NonNull WebSocketSession session, TextMessage message) {
 
+        // Start reading generated responses
         try {
+            // Create an object from the message
             Object jsonResponseObject = jsonMapper.readValue(message.getPayload(), Object.class);
 
             if (jsonResponseObject instanceof Map) {
+                // get the event key of the object
                 String event = (String) ((Map) jsonResponseObject).get("event");
 
                 switch (event) {
+                    // System messages which do not require any operations
                     case "ping": case "pong": case "heartbeat": case "systemStatus": break;
+
+                    // The status of the subscription
                     case "subscriptionStatus":
                         Object status = ((Map) jsonResponseObject).get("status");
                         if (status.equals("error")) {
                             LOGGER.debug("Error: " + ((Map) (jsonResponseObject)).get("errorMessage"));
                         }
                         else {
+                            // Convert the message into a SubscriptionDTO
                             SubscriptionDTO subscriptionDTO = jsonMapper.convertValue(jsonResponseObject, SubscriptionDTO.class);
                         }
                         break;
@@ -83,9 +106,11 @@ public class KrakenHandler extends TextWebSocketHandler {
                 }
             }
 
+            // If the object is an instance of List, we need this message because it contains the order book
             if (jsonResponseObject instanceof List) {
                 List jsonList = (List) jsonResponseObject;
 
+                // Convert the Object that comes in the message to an OrderBook
                 OrderBookWebsocketDTO orderBookDTO = jsonMapper.convertValue(jsonList.get(1), OrderBookWebsocketDTO.class);
                 System.out.println(orderBookDTO.toString());
                 System.out.println(jsonList.get(3) + "\n\n\n"); // Pair of Currencies
@@ -96,6 +121,10 @@ public class KrakenHandler extends TextWebSocketHandler {
         }
     }
 
+    /**
+     * Does a handshake between the server (API) and us (Client).
+     * Initialises the connection.
+     */
     public boolean connect() {
         try {
             var webSocketClient = new StandardWebSocketClient();
@@ -112,6 +141,9 @@ public class KrakenHandler extends TextWebSocketHandler {
         return false;
     }
 
+    /**
+     * Closes the client session.
+     */
     public void close() {
         try {
             this.clientSession.close();
@@ -121,11 +153,21 @@ public class KrakenHandler extends TextWebSocketHandler {
         }
     }
 
+    /**
+     * Activates when the connection is closed.
+     *
+     * @param session
+     * @param status
+     * @throws Exception
+     */
     @Override
     public void afterConnectionClosed(WebSocketSession session, @NonNull CloseStatus status) throws Exception {
         LOGGER.info("Kraken: Connection Closed!");
     }
 
+    /**
+     * Validates if we are connected to the server.
+     */
     public boolean connected() {
         return this.clientSession != null && this.clientSession.isOpen();
     }

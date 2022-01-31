@@ -2,7 +2,7 @@ package com.nexo.marketdata.constants;
 
 public class ExceptionConstants {
 
-    // Kraken API Service
+    // Kraken Rest API Service
     public static final String ERROR_NULL_METHOD = "The API method can't be null.";
     public static final String ERROR_NULL_SIGNATURE = "The signature can't be null.";
     public static final String ERROR_NULL_KEY = "The key can't be null.";
