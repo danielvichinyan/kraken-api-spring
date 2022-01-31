@@ -8,7 +8,5 @@ public interface WebSocketService {
 
     void subscribe(List<String> pairs, int interval, int depth, String name);
 
-    void unsubscribe(List<String> channelIds, String name);
-
     void close();
 }

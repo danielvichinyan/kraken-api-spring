@@ -39,19 +39,6 @@ public class WebSocketServiceImpl extends TextWebSocketHandler implements WebSoc
     }
 
     @Override
-    public void unsubscribe(List<String> channelIds, String name) {
-        var json = new ObjectMapper().createObjectNode();
-        json.put("event", "unsubscribe");
-        if (!channelIds.isEmpty()) {
-            json.putArray("pair").addAll((ArrayNode) new ObjectMapper().valueToTree(channelIds));
-        }
-        val subscription = json.putObject("subscription");
-        subscription.put("name", name);
-
-        this.publicClient.sendMessage(json.toString());
-    }
-
-    @Override
     public boolean connect() {
         val publicCon = this.publicClient.connected() ? this.publicClient.connected() : this.publicClient.connect();
         return publicCon;

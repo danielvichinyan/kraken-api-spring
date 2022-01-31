@@ -52,7 +52,7 @@ public class KrakenHandler extends TextWebSocketHandler {
             int i = 1;
             do {
                 errorMsg = this.errorMessages.get(reqId);
-                Thread.sleep(i * 1000);
+                Thread.sleep(i * 1000L);
             }
             while (i++ < 4 && errorMsg == null);
         } catch (IOException | InterruptedException e) {

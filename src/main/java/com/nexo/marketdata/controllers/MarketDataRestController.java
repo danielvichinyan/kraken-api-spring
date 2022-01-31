@@ -30,7 +30,7 @@ public class MarketDataRestController {
     @GetMapping("/data")
     public ResponseEntity<OrderBookDTO> fetchMarketData(
             @RequestParam("pair") String pair
-    ) throws IOException, InvalidKeyException, NoSuchAlgorithmException, KrakenApiException {
+    ) throws IOException {
         Map<String, String> input = new HashMap<>();
         input.put("pair", pair);
 

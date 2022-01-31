@@ -46,20 +46,6 @@ public class MarketDataWebsocketController {
         return ResponseEntity.ok("{\"msg\": \"subscribed\"}");
     }
 
-    @PostMapping("/unsubscribe")
-    public ResponseEntity<String> unsubscribe (
-            @RequestParam (required = false, defaultValue = "") List<String> pairs,
-            @RequestParam (required = false) String name
-    ) {
-        try {
-            this.webSocketService.unsubscribe(pairs, name);
-            return ResponseEntity.ok().build();
-        }
-        catch(RuntimeException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
-    }
-
     @PostMapping ("/close")
     public ResponseEntity<String> close() {
         this.webSocketService.close();
