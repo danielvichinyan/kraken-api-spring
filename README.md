@@ -3,21 +3,23 @@ Implemented Kraken Websockets 1.8 API and Kraken REST API. Created a websocket c
 
 # Instructions
 
+***The project MUST be run with Java 11.***
+
 The Application provides 2 different implementation of APIs:
 
-REST API:
+***REST API:***
 
 For the this endpoint you have to provide query param "pair", for example: ?pair=BTCUSD
 
 1). Get Order Book Data Endpoint (GET) -> http://localhost:8080/data?pair=BTCUSD
 
-WebSockets API:
+***WebSockets API*:**
 
-*** WARNING ***
+***WARNING***
 
-*** The Output of the Request is displayed in the CONSOLE of the IDE you are running it on. ***
+***The Output of the Request is displayed in the CONSOLE of the IDE you are running it on.***
 
-*** After sending the /subscribe POST request get back to the IDE's console and watch the order data stream. ***
+***After sending the /subscribe POST request get back to the IDE's console and watch the order data stream.***
 
 1). Send an empty POST request to http://localhost:8080/connect
 
