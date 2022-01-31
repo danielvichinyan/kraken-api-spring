@@ -23,7 +23,10 @@ For the this endpoint you have to provide query param "pair", for example: ?pair
 
 1). Send an empty POST request to http://localhost:8080/connect
 
-2). Send a POST request to http://localhost:8080/subscribe?pair=BTC/USD,ETH/USD&interval=5&depth=10&name=book
+2). Send a POST request to 
+
+http://localhost:8080/subscribe?pair=BTC/USD,ETH/USD&interval=5&depth=10&name=book
+
 This /subscribe POST request MUST have 5 query params:
 
 pair=list of strings -> "BTC/USD","ETH/USD"
